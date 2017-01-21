@@ -1,0 +1,40 @@
+$mobile-background-color: blue;
+$tablet-background-color: green;
+$desktop-backgroun-color: gold;
+$tv-backgroun-color: orange;
+$cinema-backgroun-color: red;
+
+/*movil azul*/
+body {
+    background: $mobile-background-color;
+    transition: background 0.5s;
+}
+
+
+/*Tablet verde*/
+@media all and (min-width: 768px) {
+    body {
+        background: $tablet-background-color;
+    }
+}
+
+/*Desktop*/
+@media all and (min-width: 1025px) {
+    body {
+        background: $desktop-backgroun-color;
+    }
+}
+
+/*TV*/
+@media all and (min-width: 1200px) {
+    body {
+        background: $tv-backgroun-color;
+    }
+}
+
+/*Cine*/
+@media all and (min-width: 1400px) {
+    body {
+        background: $cinema-backgroun-color;
+    }
+}
