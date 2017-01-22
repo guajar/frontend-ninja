@@ -1,40 +1,5 @@
-$mobile-background-color: blue;
-$tablet-background-color: white;
-$desktop-backgroun-color: gold;
-$tv-backgroun-color: orange;
-$cinema-backgroun-color: red;
+@import url('https://fonts.googleapis.com/css?family=Patua+One|Slabo+27px');
 
-/*movil azul*/
-body {
-    background: $mobile-background-color;
-    transition: background 0.5s;
-}
-
-
-/*Tablet verde*/
-@media all and (min-width: 768px) {
-    body {
-        background: $tablet-background-color;
-    }
-}
-
-/*Desktop*/
-@media all and (min-width: 1025px) {
-    body {
-        background: $desktop-backgroun-color;
-    }
-}
-
-/*TV*/
-@media all and (min-width: 1200px) {
-    body {
-        background: $tv-backgroun-color;
-    }
-}
-
-/*Cine*/
-@media all and (min-width: 1400px) {
-    body {
-        background: $cinema-backgroun-color;
-    }
-}
+@import "variables";
+@import "html-tags";
+@import "web-header";

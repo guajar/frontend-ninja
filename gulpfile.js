@@ -11,8 +11,8 @@ gulp.task("default", ["compile-sass"], function() {
         server:"./"
     });
 
-    //Cuando haya cambios en style.scss, compila sass
-    gulp.watch('./src/scss/style.scss', ['compile-sass']);
+    //Cuando haya cambios en archivos scss, compila sass
+    gulp.watch('./src/scss/*.scss', ['compile-sass']);
 
     //Cuando se cambie el HTML, Recargamos el navegador
     gulp.watch('./*.html', function() {
