@@ -5,6 +5,10 @@ body {
         .songs-list { display: block; }
         // NO se tiene que ver el formulario
         .new-song-form { display: none; }
+
+        @include if-is-medium-screen {
+            .songs-list { display: flex; }
+        }
     }
 
     &.ui-form-shown {
@@ -12,5 +16,9 @@ body {
         .songs-list { display: none; }
         // SI se tiene que ver el formulario
         .new-song-form { display: flex; }
+
+        @include if-is-medium-screen {
+            .songs-list { display: flex; }
+        }
     }
 }
