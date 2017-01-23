@@ -11,7 +11,28 @@ $('.new-song-form').on("submit", function() {
             input.focus();
             return false;
         }
-    });     
+    });  
+
+    //Con todos los campos OK, guardamos en el Backend la canción
+    var song = {
+        artist: $("#artist").val(),
+        title: $("#title").val(),
+        audio_url: $("#audio_url").val(),
+        cover_url: $("#cover_url").val()
+    };
+
+    $.ajax({
+        url: "/api/songs/",        
+        type: "post",       // post => Crear una canción
+        data: song,
+        success: function(data) {
+            alert("Canción guardada correctamente");
+        },
+        error: function(error) {
+            alert("Se ha producido un error");
+            console.log("Error al guardar la canción", error);
+        }
+    });
 
     return false;   //no queremos enviar el form nunca
 });
