@@ -1,6 +1,8 @@
 var $ = require('jquery');
+var SongsService = require('./SongsService');
 
 $('.new-song-form').on("submit", function() {
+    var self = this;
 
     // validación rápida de inputs
     var inputs = $(this).find("input").each(function(i) {   //i = loop index    
@@ -21,17 +23,17 @@ $('.new-song-form').on("submit", function() {
         cover_url: $("#cover_url").val()
     };
 
-    $.ajax({
-        url: "/api/songs/",        
-        type: "post",       // post => Crear una canción
-        data: song,
-        success: function(data) {
-            alert("Canción guardada correctamente");
-        },
-        error: function(error) {
-            alert("Se ha producido un error");
-            console.log("Error al guardar la canción", error);
-        }
+    // Antes de enviar el formulario, bloqueamos el botón de enviar
+    $(this).find("button").text("Saving song...").attr("disabled", true);
+
+    // Lo enviamos a Backend
+    SongsService.save(song, function(data) {
+        alert("Canción guardada correctamente");
+        $(self).reset();   //Resetea el formulario
+        $(self).find("button").text("Saving song...").attr("disabled", false);
+    }, function(error) {
+        alert("Se ha producido un error");
+        $(self).find("button").text("Saving song...").attr("disabled", false);  //TODO: Refactorizar esto
     });
 
     return false;   //no queremos enviar el form nunca
