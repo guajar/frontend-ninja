@@ -2,10 +2,11 @@ var gulp = require('gulp'); // importamos gulp
 var sass = require('gulp-sass'); // importamos sass
 var notify = require('gulp-notify');
 var browserSync = require('browser-sync').create();
-var concat = require('gulp-concat');
+// var concat = require('gulp-concat');
 var browserify = require('browserify');
 var tap = require('gulp-tap');
 var buffer = require('gulp-buffer');
+var sourcemaps= require('gulp-sourcemaps');
 
 // config
 var sassConfig = {
@@ -47,9 +48,11 @@ gulp.task("default", [sassConfig.compileSassTaskName, jsConfig.concatJsTaskName]
 // compila sass
 gulp.task(sassConfig.compileSassTaskName, function(){
     gulp.src(sassConfig.entryPoint)    // cargo el style.scss
+    .pipe(sourcemaps.init())        //Empezamos a capturar los sourcemaps
     .pipe(sass().on('error', function(error){ // compilamos sass
         return notify().write(error); // si ocurre un error, mostramos notifiación
     }))
+    .pipe(sourcemaps.write('./'))       //terminamos de capturar los sourcemaps
     .pipe(gulp.dest(sassConfig.dest))      // dejo el resultado en ./dist/
     .pipe(browserSync.stream())     // recargamos el CSS en el navegador
     .pipe(notify("SASS Compilado 🤘"));
@@ -57,13 +60,17 @@ gulp.task(sassConfig.compileSassTaskName, function(){
 
 // concatena js
 gulp.task(jsConfig.concatJsTaskName, function(){
-    gulp.src(jsConfig.entryPoint)
-    .pipe(tap(function(file){ // para cada archivo seleccionado
+    gulp.src(jsConfig.entryPoint)    
+    .pipe(tap(function(file){   // para cada archivo seleccionado
         // lo pasamos por browserify para importar los require
-        file.contents = browserify(file.path).bundle();
+        file.contents = browserify(file.path, { debug:true }).bundle().on('error', function(error){
+            return notify().write(error); // si ocurre un error javascript, lanza notificación
+        });
     }))
     .pipe(buffer()) // convertimos a buffer para que funcione el siguiente pipe
-    //.pipe(concat(jsConfig.concatFile))
+    // .pipe(concat(jsConfig.concatFile))
+    .pipe(sourcemaps.init({ loadMaps:true }))        //Empezamos a capturar los sourcemaps
+    .pipe(sourcemaps.write('./'))       //terminamos de capturar los sourcemaps
     .pipe(gulp.dest(jsConfig.dest))
     .pipe(notify("JS Concatenado 💪"))
     .pipe(browserSync.stream());
