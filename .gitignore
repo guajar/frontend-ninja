@@ -3,3 +3,6 @@ node_modules/
 
 # archivos de distribución
 dist/
+
+# archivos BBDD
+db/
