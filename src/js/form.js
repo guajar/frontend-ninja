@@ -29,7 +29,7 @@ $('.new-song-form').on("submit", function() {
     // Lo enviamos a Backend
     SongsService.save(song, function(data) {
         alert("Canción guardada correctamente");
-        $(self).reset();   //Resetea el formulario
+        self.reset();   //Resetea el formulario
         $(self).find("button").text("Saving song...").attr("disabled", false);
     }, function(error) {
         alert("Se ha producido un error");
