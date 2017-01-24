@@ -6,6 +6,28 @@ $song-border-width: 1px;
 // styles
 .songs-list {
 
+    // ocultamos todos los div que tengan la clase ui-
+    div[class^="ui-"] {
+        display: none;
+    }
+
+    // Estado ideal
+    &.ideal .ui-ideal { 
+        display: block;
+         @include if-is-medium-screen {
+             display: flex;
+        }
+    }
+
+    // Estado en blanco vacío
+    &.blank .ui-blank { display: block; }
+
+    // Estado error
+    &.error .ui-error { display: block; }
+
+    // Estado cargando
+    &.loading .ui-loading { display: block; }
+
     @include if-is-medium-screen {
         display: flex;
         flex-wrap: wrap;

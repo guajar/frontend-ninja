@@ -8,6 +8,9 @@ var tap = require('gulp-tap');
 var buffer = require('gulp-buffer');
 var sourcemaps= require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
+var cssnano = require('cssnano');
 
 // config
 var sassConfig = {
@@ -60,6 +63,7 @@ gulp.task(sassConfig.compileSassTaskName, function(){
     .pipe(sass().on('error', function(error){ // compilamos sass
         return notify().write(error); // si ocurre un error, mostramos notifiación
     }))
+    .pipe(postcss([autoprefixer(), cssnano()]))     // autoprefija el css yh lo minifica
     .pipe(sourcemaps.write('./'))       //terminamos de capturar los sourcemaps
     .pipe(gulp.dest(sassConfig.dest))      // dejo el resultado en ./dist/
     .pipe(browserSync.stream())     // recargamos el CSS en el navegador
