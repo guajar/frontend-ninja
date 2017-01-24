@@ -7,6 +7,7 @@ var browserify = require('browserify');
 var tap = require('gulp-tap');
 var buffer = require('gulp-buffer');
 var sourcemaps= require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
 
 // config
 var sassConfig = {
@@ -21,6 +22,12 @@ var jsConfig = {
     watchFiles: './src/js/*.js',
     entryPoint: './src/js/main.js',
     concatFile: 'main.js',
+    dest: './dist/'
+};
+
+var uglifyConfig = {
+    uglifyTaskName: 'uglify',
+    src: '/dist/main.js',
     dest: './dist/'
 };
 
@@ -70,9 +77,19 @@ gulp.task(jsConfig.concatJsTaskName, function(){
     }))
     .pipe(buffer()) // convertimos a buffer para que funcione el siguiente pipe
     // .pipe(concat(jsConfig.concatFile))
+    .pipe(uglify())     // minificamos el código js
     .pipe(sourcemaps.init({ loadMaps:true }))        //Empezamos a capturar los sourcemaps
+    .pipe(gulp.dest(uglifyConfig.dest))
     .pipe(sourcemaps.write('./'))       //terminamos de capturar los sourcemaps
     .pipe(gulp.dest(jsConfig.dest))
     .pipe(notify("JS Concatenado 💪"))
     .pipe(browserSync.stream());
+});
+
+// minifica js
+gulp.task(uglifyConfig.uglifyTaskName, function() {
+    gulp.src(uglify.src)
+    .pipe(uglify())
+    .pipe(gulp.dest(uglifyConfig.dest))
+    .pipe(notify("JS Minificado!!!!"));
 });
