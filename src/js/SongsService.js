@@ -41,7 +41,7 @@ module.exports = {
     // borrar una canción
     delete: function(songId, successCallback, errorCallback) {
         $.ajax({
-            utl: API_URL + songId,
+            url: API_URL + songId,
             type: "delete",   // eliminar el recurso de la URL en un API REST
             success: function(data) {
                 successCallback(data);

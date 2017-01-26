@@ -16,6 +16,7 @@ $song-border-width: 1px;
         display: block;
          @include if-is-medium-screen {
              display: flex;
+             flex-wrap: wrap;
         }
     }
 
@@ -27,11 +28,6 @@ $song-border-width: 1px;
 
     // Estado cargando
     &.loading .ui-loading { display: block; }
-
-    @include if-is-medium-screen {
-        display: flex;
-        flex-wrap: wrap;
-    }
 
     .song {
         @extend .clearfix;
