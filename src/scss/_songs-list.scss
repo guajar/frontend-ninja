@@ -69,16 +69,18 @@ $song-border-width: 1px;
 
         .controls {
             button {
+                 cursor: pointer;
                 border: 0;
                  background-color: transparent
             }
             .play-button {
-                border: 0;
                 @extend .play-circle-fill;
                 float: left;
+                &:hover {
+                    @extend .play-circle-outline;
+                }
             }
             .delete-button {
-                border: 0;
                 @extend .icon-trash;
                 float: right;
             }
