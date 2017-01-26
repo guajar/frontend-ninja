@@ -60,8 +60,8 @@ module.exports = {
             html += '<div class="artist">' + song.artist + '</div>';
             html += '<div class="title">' + song.title + '</div>';
             html += '<div class="controls">';
-            html += '<button class="play-button" data-audio-url="' + song.audio_url + '">Play</button>';
-            html += '<button class="delete-button" data-id="' + song.id + '">Delete</button>';
+            html += '<button class="play-button" data-audio-url="' + song.audio_url + '" title="Play"></button>';
+            html += '<button class="delete-button" data-id="' + song.id + '" title="Delete"></button>';
             html += '</div>';
             html += "</article>";
         }

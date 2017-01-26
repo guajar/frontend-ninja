@@ -17,11 +17,14 @@ $web-header-title-font: $titles-font-family;
         font-family: $web-header-title-font;       
     }
 
-    img {
+    button {
+        @extend .icon-add;
         float: right;
         margin-top: 10px;
         transition: 0.5s transform;
-        &:hover { cursor: pointer; }    // manita al poner encima del icono
+        &:hover { cursor: pointer; }  
+        border: 0;
+        background-color: transparent;  // manita al poner encima del icono
         .ui-form-shown & {
             transform: rotate(45deg);
         }
