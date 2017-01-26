@@ -11,6 +11,8 @@ var uglify = require('gulp-uglify');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
 var cssnano = require('cssnano');
+var imagemin = require('gulp-imagemin');
+var responsive = require('gulp-responsive');
 
 // config
 var sassConfig = {
@@ -32,6 +34,35 @@ var uglifyConfig = {
     uglifyTaskName: 'uglify',
     src: '/dist/main.js',
     dest: './dist/'
+};
+
+var imagesConfig = {
+    imagesTaskName: "optimize-images",
+    src: "src/img/*",
+    dest: "./dist/img/",
+    responsive: {
+        'disc-placeholder.jpg': [ //520, 320, 250, 125
+            {
+                width: 520,
+                rename: { suffix: '-520px' }
+            },
+            {
+                width: 320,
+                rename: { suffix: '-320px' }
+            },
+            {
+                width: 250,
+                rename: { suffix: '-250px' }
+            },
+            {
+                width: 125,
+                rename: { suffix: '-125px' }
+            }
+        ],
+        '*.png': {
+            width: '100%'
+        }
+    }
 };
 
 // definimos la tarea por defecto
@@ -96,4 +127,13 @@ gulp.task(uglifyConfig.uglifyTaskName, function() {
     .pipe(uglify())
     .pipe(gulp.dest(uglifyConfig.dest))
     .pipe(notify("JS Minificado!!!!"));
+});
+
+
+// optimiza las imágenes
+gulp.task(imagesConfig.imagesTaskName, function(){
+    gulp.src(imagesConfig.src)
+    .pipe(responsive(imagesConfig.responsive))  // genera las imágenes responsive
+    .pipe(imagemin())   // optimiza el tamaño de las imagenes
+    .pipe(gulp.dest(imagesConfig.dest));
 });
