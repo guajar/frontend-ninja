@@ -13,6 +13,7 @@ var autoprefixer = require('autoprefixer');
 var cssnano = require('cssnano');
 var imagemin = require('gulp-imagemin');
 var responsive = require('gulp-responsive');
+var spritesmith = require('gulp.spritesmith');
 
 // config
 var sassConfig = {
@@ -58,11 +59,18 @@ var imagesConfig = {
                 width: 125,
                 rename: { suffix: '-125px' }
             }
-        ],
-        '*.png': {
-            width: '100%'
-        }
+        ]
     }
+};
+
+var sprites = {
+    spritesTaskName: 'sprites',
+    imgSrc: './src/img/sprites/*.png',
+    imgName: 'sprite.png',
+    cssName: '_sprite.scss',
+    imgDest: './dist/img/',
+    cssDest: './src/scss/',
+    imgPath: 'img/sprite.png'
 };
 
 // definimos la tarea por defecto
@@ -136,4 +144,16 @@ gulp.task(imagesConfig.imagesTaskName, function(){
     .pipe(responsive(imagesConfig.responsive))  // genera las imágenes responsive
     .pipe(imagemin())   // optimiza el tamaño de las imagenes
     .pipe(gulp.dest(imagesConfig.dest));
+});
+
+// generación de spritesheets
+gulp.task(sprites.spritesTaskName, function(){
+    var spriteData = gulp.src(sprites.imgSrc).
+    pipe(spritesmith({
+        imgName: sprites.imgName,
+        cssName: sprites.cssName,
+        imgPath: sprites.imgPath
+    }));
+    spriteData.img.pipe(gulp.dest(sprites.imgDest));
+    spriteData.css.pipe(gulp.dest(sprites.cssDest));
 });

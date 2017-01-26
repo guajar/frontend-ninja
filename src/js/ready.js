@@ -2,6 +2,7 @@ var $ = require('jquery');
 var uiManager = require('./uiManager');
 var SongsListManager = require('./SongsListManager');
 var SongsService = require('./SongsService');
+var Player = require('./Player');
 
 $(document).ready(function() {
 
@@ -19,8 +20,7 @@ $(document).ready(function() {
    // manejador de eventos del botón de play
    $(".songs-list").on("click", ".play-button", function() {
        var audioUrl = $(this).data("audioUrl");
-       $("#player").attr("src", audioUrl);
-       $("#player")[0].play();
+       Player.play(audioUrl);
    });
 
    // cargar las canciones

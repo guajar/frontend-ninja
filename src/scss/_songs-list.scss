@@ -66,5 +66,22 @@ $song-border-width: 1px;
         .title {
             @include text-overflow-ellipsis;
         }
+
+        .controls {
+            button {
+                border: 0;
+                 background-color: transparent
+            }
+            .play-button {
+                border: 0;
+                @extend .play-circle-fill;
+                float: left;
+            }
+            .delete-button {
+                border: 0;
+                @extend .icon-trash;
+                float: right;
+            }
+        }
     }
 }

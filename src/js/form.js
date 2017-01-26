@@ -1,5 +1,6 @@
 var $ = require('jquery');
 var SongsService = require('./SongsService');
+var SongsListManager = require('./SongsListManager');
 
 $('.new-song-form').on("submit", function() {
     var self = this;
@@ -30,10 +31,11 @@ $('.new-song-form').on("submit", function() {
     SongsService.save(song, function(data) {
         alert("Canción guardada correctamente");
         self.reset();   //Resetea el formulario
-        $(self).find("button").text("Saving song...").attr("disabled", false);
+        $(self).find("button").text("Save song").attr("disabled", false);
+        SongsListManager.loadSongs();
     }, function(error) {
         alert("Se ha producido un error");
-        $(self).find("button").text("Saving song...").attr("disabled", false);  //TODO: Refactorizar esto
+        $(self).find("button").text("Save song").attr("disabled", false);  //TODO: Refactorizar esto
     });
 
     return false;   //no queremos enviar el form nunca
